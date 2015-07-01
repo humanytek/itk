@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+	    <record id="venta" model="hr.department">
+		    <field name="name">Venta</field>
+		    <field name="company_id" eval="1"/>
+	    </record>
+	    
+	    <record id="vendedor" model="hr.job">
+		    <field name="name">Vendedor</field>
+		    <field name="description">Vendedor</field>
+		    <field name="department_id" ref="venta"/>
+	    </record>
+	    
+    </data>
+</openerp>

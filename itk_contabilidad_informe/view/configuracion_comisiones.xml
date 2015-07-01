@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+        <!-- 15/05/2015 (felix) Vista form: Contabilidad/Configuración/Configuración de comisiones/Configuración de comisiones -->
+        <record id="view_penalization_form_inherit_1" model="ir.ui.view">
+            <field name="name">view.penalization.form.inherit.1</field>
+            <field name="model">penalization.rule</field>
+            <field name="inherit_id" ref="sfs_payment_comission_glp.view_penalization_form"/>
+            <field name="arch" type="xml">
+            
+                <!-- 15/05/2015 (felix) Agregar campo de bonos -->
+                <xpath expr="//field[@name='rule_line_ids']" position="after">
+                    <separator string="Configuración de bonos"/>
+                    <field name="bono_line_ids" colspan="4" nolabel="1">
+                        <tree string="Configuración de bonos" editable="bottom">
+                            <field name="monto_venta" string="Monto de venta al mes" required="True"/>
+                            <field name="monto_pago" string="Monto a pagar" required="True"/>
+                        </tree>
+                    </field>
+                </xpath>
+                
+                <!-- 15/05/2015 (felix) Agregar campo de monto tolerancia por pago +/- -->
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="monto_tolerancia" string="Tolerancia de pago (+/-)"
+                        help="La tolerancia define el margen en que se estima una factura como pagada"/>
+                </xpath>
+                
+                <!-- 27/05/2015 (felix) Agregar campo porcentaje de comisión -->
+                <xpath expr="//field[@name='monto_tolerancia']" position="after">
+                    <label for="porcentaje_comision" string="Porcentaje de comisión"/>
+                    <div>
+                        <field name="porcentaje_comision" class="oe_inline" 
+                            help="El porcentaje de comisión incide en el porcentaje dado aquí sobre la utilidad de un producto específico"/>
+                        %%
+                    </div>
+                </xpath>
+                
+            </field>
+        </record>
+        
+    </data>
+</openerp>

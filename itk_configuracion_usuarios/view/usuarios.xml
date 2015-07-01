@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <!-- 15/05/2015 (felix) Vista form: Configuración/Usuarios/Usuarios -->
+        <record id="view_users_form_inherit_1" model="ir.ui.view">
+            <field name="name">view.users.form.inherit.1</field>
+            <field name="model">res.users</field>
+            <field name="priority" eval="300"/>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+            
+                <!-- 15/05/2015 (felix) Agregar campo "Bono" si el usuario es vendedor -->
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="bono" string="Bono"/>
+                </xpath>
+                
+            </field>
+        </record>
+        
+    </data>
+</openerp>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <!-- 18/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de bonos -->
+        <record id="view_payment_bonos_report_tree" model="ir.ui.view">
+            <field name="name">view.payment.bonos.report.tree</field>
+            <field name="model">payment.bonos.report</field>
+            <field name="arch" type="xml">
+            
+                <!-- 18/05/2015 (felix) Vista tree de reporte de bonos -->
+                <tree string="Reporte de pago de bonos" colors="blue:state=='open'; gray:state in ['close','na'];">
+                    <field name="name" string="Bono"/>
+                    <field name="vendedor_id" string="Vendedor" invisible="1"/>
+                    <field name="monto_venta" string="Monto de venta en el mes"/>
+                    <field name="monto_pago" string="Monto de bono"/>
+                    <field name="fecha_pago" string="Fecha pago del bono"/>
+                    <field name="state" string="Estatus"/>
+                </tree>
+                
+            </field>
+        </record>
+        
+        <!-- 18/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de bonos -->
+        <record id="view_payment_bonos_report_form" model="ir.ui.view">
+            <field name="name">view.payment.bonos.report.form</field>
+            <field name="model">payment.bonos.report</field>
+            <field name="arch" type="xml">
+            
+                <!-- 18/05/2015 (felix) Vista form de reporte de bonos -->
+                <form string="Reporte de pago de bonos" version="7.0">
+                    <header>
+                        <button name="close_bono" string="Registrar pago" states="open" type="object" class="oe_highlight" 
+                            attrs="{'invisible': ['|', ('monto_pago', '=', 0.00)]}"/>
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="open,paid,na"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <label for="name" string="Bono" readonly="1"/>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                        <group col="2">
+                            <group>
+                                <field name="vendedor_id" string="Vendedor" readonly="1"/>
+                                <field name="fecha_pago" string="Fecha pago del bono" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="monto_pago" string="Monto de bono" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Facturas">
+                                <field name="facturas_ids" readonly="1">
+                                    <tree string="Facturas">
+                                        <field name="factura_id" string="Factura"/>
+                                        <field name="cliente_id" string="Cliente"/>
+                                        <field name="fecha_factura" string="Fecha de factura"/>
+                                        <field name="fecha_pago" string="Fecha de pago"/>
+                                        <field name="cant_productos" string="Líneas de productos"/>
+                                        <field name="monto_factura" string="Monto de factura" sum="Monto de factura"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+                
+            </field>
+        </record>
+        
+        <!-- 18/05/2015 (felix) Vista de motor de búsqueda -->
+        <record id="view_payment_bonos_report_search" model="ir.ui.view">
+            <field name="name">payment.bonos.report.search</field>
+            <field name="model">payment.bonos.report</field>
+            <field name="arch" type="xml">
+                <search string="Reporte de bonos" version="7.0">
+                    <field name="name" string="Bono"/>
+                    <field name="vendedor_id" string="Vendedor"/>
+                </search>
+            </field>
+        </record>
+    
+        <!-- 18/05/2015 (felix) Acción de reporte de bonos -->
+        <record id="action_reporte_bonos" model="ir.actions.act_window">
+            <field name="name">Reporte de bonos</field>
+            <field name="res_model">payment.bonos.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_payment_bonos_report_tree"/>
+            <field name="context">{'group_by':'vendedor_id'}</field>
+            <field name="search_view_id" ref="view_payment_bonos_report_search"/>
+        </record>
+
+        <!-- 18/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de bonos -->
+        <menuitem id="menu_reporte_bonos" name="Reporte de bonos" parent="account.menu_finance_reports" action="action_reporte_bonos" sequence="6"/>
+            
+    </data>
+</openerp>

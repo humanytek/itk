@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <!-- 15/05/2015 (felix) Vista form: Contabilidad/Clients/Facturas de cliente -->
+        <record id="invoice_form_inherit_1" model="ir.ui.view">
+            <field name="name">invoice.form.inherit.1</field>
+            <field name="model">account.invoice</field>
+            <field name="priority" eval="300"/>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+            
+                <!-- 15/05/2015 (felix) Agregar campo "Precio de coste" del producto -->
+                <xpath expr="//form/sheet/notebook/page[@string='Invoice Lines']/field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='price_unit']" 
+                    position="after">
+                    <field name="standard_price" string="Precio coste" groups="base.group_system"/>
+                </xpath>
+                
+            </field>
+        </record>
+        
+    </data>
+</openerp>

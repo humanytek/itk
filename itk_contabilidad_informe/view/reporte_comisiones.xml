@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <!-- 27/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de comisiones -->
+        <record id="view_comisiones_form" model="ir.ui.view">
+            <field name="name">view.comisiones.form</field>
+            <field name="model">payment.comission.line</field>
+            <field name="arch" type="xml">
+            
+                <!-- 27/05/2015 (felix) Vista form de reporte de comisiones -->
+                <form string="Reporte de comisiones" version="7.0">
+                    <group col="2">
+                        <group>
+                            <field name="invoice_id" string="Factura"/>
+                            <field name="partner_id" string="Cliente"/>
+                            <field name="fecha_creacion" string="Fecha creación de factura"/>
+                            <field name="due_date" string="Fecha vencimiento de factura"/>
+                            <field name="payment_date" string="Fecha pago de factura"/>
+                            <field name="payment_term_id" string="Plazos de pago"/>
+                            <field name="due_days" string="Días de retraso"/>
+                        </group>
+                        <group>
+                            <field name="amount_untaxed" string="Monto subtotal de factura"/>
+                            <field name="amount_tax" string="Monto impuesto de factura"/>
+                            <field name="invoice_amount" string="Monto total de factura"/>
+                            <label for="penalization_percent" string="Porcentaje de penalización"/>
+                            <div>
+                                <field name="penalization_percent" class="oe_inline"/>
+                                %%
+                            </div>
+                            <field name="penalization_amount" string="Monto de penalización"/>
+                            <label for="comission_percent" string="Porcentaje de penalización"/>
+                            <div>
+                                <field name="comission_percent" class="oe_inline"/>
+                                %%
+                            </div>
+                            <field name="comission" string="Monto de comisión"/>
+                            <field name="comision_penalizacion" string="Monto de comisión con descuento de penalización"/>
+                        </group>
+                    </group>
+                    <separator string="Productos"/>
+                    <field name="productos_ids">
+                        <tree string="Productos">
+                            <field name="name" string="Producto"/>
+                            <field name="name" string="Descripción"/>
+                            <field name="quantity" string="Cantidad"/>
+                            <field name="price_unit" string="Precio unidad"/>
+                            <field name="standard_price" string="Precio coste" groups="sfs_payment_comission_glp.group_sale_comission_manager"/>
+                            <field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':parent.type}" 
+                                domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
+                            <field name="price_subtotal" string="Importe"/>
+                        </tree>
+                    </field>
+                </form>
+                
+            </field>
+        </record>
+    
+        <!-- 25/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de comisiones -->
+        <record id="view_payment_comisiones_tree" model="ir.ui.view">
+            <field name="name">view.payment.comisiones.tree</field>
+            <field name="model">payment.comission.main</field>
+            <field name="arch" type="xml">
+
+                <!-- 25/05/2015 (felix) Vista tree de reporte de comisiones -->
+                <tree string="Reporte de comisiones" colors="blue:state=='open'; gray:state=='close';">
+                    <field name="name" string="Comisión"/>
+                    <field name="vendedor_id" string="Vendedor" invisible="1"/>
+                    <field name="cant_facturas" string="Cantidad de facturas"/>
+                    <field name="monto_penalizacion" string="Monto de penalización al mes"/>
+                    <field name="monto_comision" string="Monto de comisión en el mes"/>                    
+                    <field name="fecha_pago" string="Fecha pago de comisión"/>
+                    <field name="state" string="Estatus"/>
+                </tree>
+                
+            </field>
+        </record>
+    
+        <!-- 25/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de comisiones -->
+        <record id="view_payment_comisiones_form" model="ir.ui.view">
+            <field name="name">view.payment.comisiones.form</field>
+            <field name="model">payment.comission.main</field>
+            <field name="arch" type="xml">
+            
+                <!-- 25/05/2015 (felix) Vista form de reporte de comisiones -->
+                <form string="Reporte de comisiones" version="7.0">
+                    <header>
+                        <button name="close_comision" string="Registrar pago" states="open" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="open,paid"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <label for="name" string="Comisión" readonly="1"/>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                        <group col="2">
+                            <group>
+                                <field name="vendedor_id" string="Vendedor" readonly="1"/>
+                                <field name="fecha_pago" string="Fecha pago de la comisión" readonly="1"/>
+                            </group>
+                            <group />
+                        </group>
+                        <notebook>
+                            <page string="Facturas">
+                                <field name="facturas_ids" class="oe_view oe_list" readonly="1">
+                                    <tree string="Facturas">
+                                        <field name="invoice_id" string="Factura"/>
+                                        <field name="partner_id" string="Cliente"/>
+                                        <field name="fecha_creacion" string="Fecha creación de factura"/>
+                                        <field name="due_date" string="Fecha vencimiento de factura"/>
+                                        <field name="payment_date" string="Fecha pago de factura"/>
+                                        <field name="payment_term_id" string="Plazos de pago"/>
+                                        <field name="due_days" string="Días de retraso"/>
+                                        <field name="invoice_amount" string="Monto de la factura"/>
+                                        <field name="penalization_percent" string="Porcentaje de penalización (%%)"/>
+                                        <field name="penalization_amount" string="Monto de penalización" sum="Penalization Amount"/>
+                                        <field name="comission_percent" string="Porcentaje de comisión (%%)"/>
+                                        <field name="comission" string="Monto de comisión" sum="Commission"/>
+                                        <field name="comision_penalizacion" string="Monto de comisión con descuento de penalización" sum="Comision"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+                
+            </field>
+        </record>
+        
+        <!-- 25/05/2015 (felix) Vista de motor de búsqueda -->
+        <record id="view_payment_comisiones_search" model="ir.ui.view">
+            <field name="name">view.payment.comisiones.search</field>
+            <field name="model">payment.comission.main</field>
+            <field name="arch" type="xml">
+                <search string="Reporte de comisiones" version="7.0">
+                    <field name="name" string="Comisión"/>
+                    <field name="vendedor_id" string="Vendedor"/>
+                </search>
+            </field>
+        </record>
+    
+        <!-- 25/05/2015 (felix) Acción de reporte de comisiones -->
+        <record id="action_payment_comission_wizard" model="ir.actions.act_window">
+            <field name="name">Reporte de comisiones</field>
+            <field name="res_model">payment.comission.main</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_payment_comisiones_tree"/>
+            <field name="context">{'group_by':'vendedor_id'}</field>
+            <field name="search_view_id" ref="view_payment_comisiones_search"/>
+        </record>
+
+        <!-- 25/05/2015 (felix) Menú: Contabilidad/Informe/Reporte de comisiones -->
+        <menuitem id="sfs_payment_comission_glp.menu_payment_comission_wizard" name="Reporte de comisiones" parent="account.menu_finance_reports" 
+            action="action_payment_comission_wizard" sequence="4"/>
+            
+    </data>
+</openerp>

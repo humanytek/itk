@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <!-- 15/05/2015 (felix) Vista form: Recursos Humanos/Recursos Humanos/Empleados -->
+        <record id="view_employee_form_inherit_1" model="ir.ui.view">
+            <field name="name">view.employee.form.inherit.1</field>
+            <field name="model">hr.employee</field>
+            <field name="priority" eval="300"/>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+            
+                <!-- 15/05/2015 (felix) Agregar campo "Bono" si el usuario es vendedor -->
+                <xpath expr="//form/sheet/notebook/page[@string='Public Information']/group/group[@string='Position']/field[@name='coach_id']" position="after">
+                    <field name="bono" string="Bono"/>
+                </xpath>
+                
+            </field>
+        </record>
+        
+    </data>
+</openerp>
