@@ -109,6 +109,10 @@ class payment_comission_main_itk(osv.osv):
         src_comision_rule = obj_comision_rule.search(cr, uid, [('active', '=', True)], order='id desc', limit=1)
         if src_comision_rule:
             tolerancia = obj_comision_rule.browse(cr, uid, src_comision_rule[0], context)['monto_tolerancia']
+        else:
+            raise osv.except_osv('Advertencia','No se ha creado una configuracion de comision\ndebe configurarla en:\n'
+                'Contabilidad/Configuracion/Configuracion de comisiones')
+            return {}
         
         for inv in obj_account_invoice.browse(cr, uid, all_account_invoice, context):
                         
