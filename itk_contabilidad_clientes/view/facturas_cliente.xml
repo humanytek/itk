@@ -13,7 +13,23 @@
                 <!-- 15/05/2015 (felix) Agregar campo "Precio de coste" del producto -->
                 <xpath expr="//form/sheet/notebook/page[@string='Invoice Lines']/field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='price_unit']" 
                     position="after">
-                    <field name="standard_price" string="Precio coste" groups="base.group_system"/>
+                    <field name="purchase_price" string="Precio coste" groups="base.group_system"/>
+                </xpath>
+                
+            </field>
+        </record>
+        
+        <!-- 09/07/2015 (felix) Vista form de facturas en: Contabilidad/Clients/Facturas de cliente -->
+        <record id="view_vendor_receipt_form_inherit_1" model="ir.ui.view">
+            <field name="name">view.vendor.receipt.form.inherit.1</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="priority" eval="300"/>
+            <field name="arch" type="xml">
+            
+                <!-- 09/07/2015 (felix) Vista form de facturas en: Contabilidad/Clients/Facturas de cliente -->
+                <xpath expr="//form/sheet/notebook/page[@string='Payment Information']/field[@name='line_cr_ids']/tree" position="attributes">
+                    <attribute name="editable">1</attribute>
                 </xpath>
                 
             </field>

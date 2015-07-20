@@ -37,6 +37,8 @@ Detalles:
     'depends': [
         'base',
         'account',
+        'account_voucher',
+        'sale'
     ],
     'data': [
         # Seguridad y grupos
@@ -46,6 +48,8 @@ Detalles:
         
         # View y menu
         'view/facturas_cliente.xml',
+        
+        # Wizard
         
         # Reportes
         

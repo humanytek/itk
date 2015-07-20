@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    
+        <!-- 27/12/2014 (fuc) Almacenes -->
+        <record id="penalization_rule" model="penalization.rule">
+            <field name="name">Comisiones</field>
+        </record>
+        
+    </data>
+</openerp>

@@ -47,6 +47,7 @@ Detalles:
         'security/ir.model.access.csv',
         
         # Data
+        'data/conf_comisiones_data.xml',
         
         # View y menu
         'view/reporte_comisiones.xml',

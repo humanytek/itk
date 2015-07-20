@@ -19,17 +19,47 @@
 #
 ##############################################################################
 
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+# Python
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class account_invoice_line_itk(osv.Model):
 
     _inherit = 'account.invoice.line'
-    _description = 'Datos adicionales para Interkey'    
-    _columns = {
-        'standard_price': fields.float('Precio coste', digits=(10,2)),
-    }
+    _description = 'Datos adicionales para Interkey'
     
+    # 12/07/2015 (felix) Metodo para guardar valor de modificacion de precio coste del producto
+    def _update_purchase_price(self, cr, uid, ids, name, value, args, context=None):
+        cr.execute('SELECT order_line_id FROM sale_order_line_invoice_rel WHERE invoice_id='+str(ids))
+        id_order_line = cr.fetchall()
+        if id_order_line:
+            cr.execute('UPDATE sale_order_line SET purchase_price='+str(value)+' WHERE id='+str(id_order_line[0][0]))
+        return True
+    
+    # 12/07/2015 (felix) Metodo para obtener precio coste del producto
+    def _get_purchase_price(self, cr, uid, ids, name_fields, args, context=None):
+        res = {}        
+        for inv_line in self.browse(cr, uid, ids, context):
+            res[inv_line.id] = 0.00
+            cr.execute('SELECT order_line_id FROM sale_order_line_invoice_rel WHERE invoice_id='+str(inv_line.id))
+            id_order_line = cr.fetchall()
+            if id_order_line:
+                cr.execute('SELECT purchase_price FROM sale_order_line WHERE id='+str(id_order_line[0][0]))
+                purchase_price = cr.fetchall()
+                if purchase_price:
+                    res[inv_line.id] = purchase_price[0][0]
+        return res
+    
+    _columns = {
+        'purchase_price': fields.function(_get_purchase_price, type='float', 
+            fnct_inv=_update_purchase_price, string='Precio coste', 
+            digits=(10,2))
+    }
+        
     # 01/07/2015 (felix) Modificacion Metodo original, gregar precio de coste
     def product_id_change(self, cr, uid, ids, product, uom_id, qty=0, name='', 
         type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, 
@@ -113,8 +143,9 @@ class account_invoice_line_itk(osv.Model):
            
         # Precio de coste
         if res:
-            res_final['value']['standard_price'] = res.standard_price
+            res_final['value']['purchase_price'] = res.standard_price
             
         return res_final
     
 account_invoice_line_itk()
+

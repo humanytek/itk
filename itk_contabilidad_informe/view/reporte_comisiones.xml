@@ -41,12 +41,12 @@
                     </group>
                     <separator string="Productos"/>
                     <field name="productos_ids">
-                        <tree string="Productos">
+                        <tree string="Productos" editable="1">
                             <field name="name" string="Producto"/>
                             <field name="name" string="Descripción"/>
                             <field name="quantity" string="Cantidad"/>
                             <field name="price_unit" string="Precio unidad"/>
-                            <field name="standard_price" string="Precio coste" groups="sfs_payment_comission_glp.group_sale_comission_manager"/>
+                            <field name="purchase_price" string="Precio coste" groups="base.group_system"/>
                             <field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':parent.type}" 
                                 domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
                             <field name="price_subtotal" string="Importe"/>
@@ -103,7 +103,7 @@
                         </group>
                         <notebook>
                             <page string="Facturas">
-                                <field name="facturas_ids" class="oe_view oe_list" readonly="1">
+                                <field name="facturas_ids" class="oe_view oe_list">
                                     <tree string="Facturas">
                                         <field name="invoice_id" string="Factura"/>
                                         <field name="partner_id" string="Cliente"/>

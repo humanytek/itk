@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        
+        <record id="view_sale_advance_payment_inv_inherit_1" model="ir.ui.view">
+            <field name="name">view.sale.advance.payment.inv.inherit.1</field>
+            <field name="model">sale.advance.payment.inv</field>
+            <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
+            <field name="arch" type="xml">
+            
+                <xpath expr="//footer" position="replace">          
+                    <footer>
+                        <button name="create_invoices" string="Create and View Invoice" type="object"
+                            context="{'open_invoices': True}" class="oe_highlight"
+                            attrs="{'invisible': [('advance_payment_method', '=', 'lines')]}"/>
+                        <button name="create_invoices" string="Create Invoice" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('advance_payment_method', '=', 'lines')]}"/>
+                        <button name="create_invoices" string="Show Lines to Invoice" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('advance_payment_method', '!=', 'lines')]}"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </xpath>
+                
+            </field>
+        </record>
+        
+    </data>
+</openerp>

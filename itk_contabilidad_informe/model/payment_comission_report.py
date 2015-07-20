@@ -119,7 +119,8 @@ class payment_comission_main_itk(osv.osv):
             if inv.user_id and inv.type in ['out_invoice'] and inv.state in ['open','paid'] and inv.residual <= tolerancia:
             
                 src_pagos = obj_account_move_line.search(cr, uid, [('name','like',inv.number)], order='id desc', limit=1)
-                fecha_pago_factura = obj_account_move_line.browse(cr, uid, src_pagos[0], context)['date']
+                if src_pagos:
+                    fecha_pago_factura = obj_account_move_line.browse(cr, uid, src_pagos[0], context)['date']
                 name_comision = self._gen_name_comision(cr, uid, inv.user_id.id, fecha_pago_factura, context)
                 get_comision = obj_comision_report.search(cr, uid, [('name', '=', name_comision)])
                 
@@ -239,7 +240,7 @@ class payment_comission_report_itk(osv.osv):
             utilidad_line = 0.00
             utilidad_porc = 0.00
             for prod_line in com.productos_ids:
-                utilidad_line = (prod_line.price_unit * prod_line.quantity) - (prod_line.standard_price * prod_line.quantity)
+                utilidad_line = (prod_line.price_unit * prod_line.quantity) - (prod_line.purchase_price * prod_line.quantity)
                 utilidad_porc = (utilidad_line * com.comission_percent) / 100
                 res[com.id] += utilidad_porc
         return res
