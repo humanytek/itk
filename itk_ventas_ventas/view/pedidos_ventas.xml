@@ -50,5 +50,21 @@
             </field>
         </record>
         
+        <!-- 01/07/2015 (felix) Vista tree: Ventas/Ventas/[Cotizaciones|Pedidos de ventas] -->
+        <record id="view_order_form_inherit_1" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.1</field>
+            <field name="model">sale.order</field>
+            <field name="priority" eval="320"/>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- 22/07/2015 (felix) Asociar el campo "" al grupo "Admin configuraciones" -->
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="groups">base.group_user,base.group_system</attribute>
+                </xpath>
+                
+            </field>
+        </record>
+        
     </data>
 </openerp>
