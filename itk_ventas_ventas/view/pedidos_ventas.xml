@@ -14,7 +14,7 @@
                 <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="replace">
                     <field name="purchase_price" groups="base.group_system"/>
                 </xpath>
-                
+                                
             </field>
         </record>
 
@@ -30,7 +30,23 @@
                 <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="replace">
                     <field name="purchase_price" groups="base.group_system"/>
                 </xpath>
-                
+                                
+            </field>
+        </record>
+        
+        <!-- 01/07/2015 (felix) Vista tree: Ventas/Ventas/[Cotizaciones|Pedidos de ventas] -->
+        <record id="sale_margin_sale_order_inherit_1" model="ir.ui.view">
+            <field name="name">sale.margin.sale.order.inherit.1</field>
+            <field name="model">sale.order</field>
+            <field name="priority" eval="310"/>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+            <field name="arch" type="xml">
+            
+                <!-- 22/07/2015 (felix) Asociar el campo "margin" al grupo "Admin configuraciones" -->
+                <xpath expr="//group[@name='sale_margin_grp']/field[@name='margin']" position="replace">
+                    <field name="margin" widget="monetary" options="{'currency_field': 'currency_id'}" modifiers="{'readonly': true}" groups="base.group_system"/>
+                </xpath>
+            
             </field>
         </record>
         
