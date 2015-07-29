@@ -27,10 +27,22 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+class account_invoice_itk(osv.Model):
+
+    _inherit = 'account.invoice'
+    _description = 'Datos adicionales para Interkey account.invoice'
+    _columns = {
+        'invoice_line': fields.one2many('account.invoice.line', 'invoice_id', 
+            'Invoice Lines'),
+    }
+
+account_invoice_itk()
+
+
 class account_invoice_line_itk(osv.Model):
 
     _inherit = 'account.invoice.line'
-    _description = 'Datos adicionales para Interkey'
+    _description = 'Datos adicionales para Interkey account.invoice.line'
     
     # 12/07/2015 (felix) Metodo para guardar valor de modificacion de precio coste del producto
     def _update_purchase_price(self, cr, uid, ids, name, value, args, context=None):
@@ -57,7 +69,7 @@ class account_invoice_line_itk(osv.Model):
     _columns = {
         'purchase_price': fields.function(_get_purchase_price, type='float', 
             fnct_inv=_update_purchase_price, string='Precio coste', 
-            digits=(10,2))
+            digits=(10,2)),
     }
         
     # 01/07/2015 (felix) Modificacion Metodo original, gregar precio de coste

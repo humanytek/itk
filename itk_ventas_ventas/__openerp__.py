@@ -37,7 +37,8 @@ Detalles:
     'depends': [
         'base',
         'sale',
-        'sale_margin'
+        'sale_margin',
+        'sfs_payment_comission_glp'
     ],
     'data': [
         # Seguridad y grupos

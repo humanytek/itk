@@ -13,7 +13,12 @@
                 <!-- 15/05/2015 (felix) Agregar campo "Precio de coste" del producto -->
                 <xpath expr="//form/sheet/notebook/page[@string='Invoice Lines']/field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='price_unit']" 
                     position="after">
-                    <field name="purchase_price" string="Precio coste" groups="base.group_system"/>
+                    <field name="purchase_price" string="Precio coste" groups="base.group_system,sfs_payment_comission_glp.group_sale_comission_manager"/>
+                </xpath>
+                
+                <!-- 28/07/2015 (felix) Agregar grupos para edición de campos en líneas de productos -->
+                <xpath expr="//form/sheet/notebook/page[@string='Invoice Lines']/field[@name='invoice_line']" position="attributes">
+                    <attribute name="modifiers">{'readonly': [['state', 'not in', ['draft','open']]]}</attribute>
                 </xpath>
                 
             </field>

@@ -12,7 +12,7 @@
             
                 <!-- 01/07/2015 (felix) Asociar el campo "purchase_price" al grupo "Admin configuraciones" -->
                 <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="replace">
-                    <field name="purchase_price" groups="base.group_system"/>
+                    <field name="purchase_price" groups="base.group_system,sfs_payment_comission_glp.group_sale_comission_manager"/>
                 </xpath>
                                 
             </field>
@@ -28,7 +28,7 @@
             
                 <!-- 01/07/2015 (felix) Asociar el campo "purchase_price" al grupo "Admin configuraciones" -->
                 <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="replace">
-                    <field name="purchase_price" groups="base.group_system"/>
+                    <field name="purchase_price" groups="base.group_system,sfs_payment_comission_glp.group_sale_comission_manager"/>
                 </xpath>
                                 
             </field>

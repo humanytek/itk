@@ -38,7 +38,8 @@ Detalles:
         'base',
         'account',
         'account_voucher',
-        'sale'
+        'sale',
+        'sfs_payment_comission_glp'
     ],
     'data': [
         # Seguridad y grupos

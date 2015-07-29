@@ -46,7 +46,7 @@
                             <field name="name" string="Descripción"/>
                             <field name="quantity" string="Cantidad"/>
                             <field name="price_unit" string="Precio unidad"/>
-                            <field name="purchase_price" string="Precio coste" groups="base.group_system"/>
+                            <field name="purchase_price" string="Precio coste" groups="base.group_system,sfs_payment_comission_glp.group_sale_comission_manager"/>
                             <field name="invoice_line_tax_id" widget="many2many_tags"  
                                 domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
                             <field name="price_subtotal" string="Importe"/>
