@@ -105,6 +105,14 @@ class payment_comission_main_itk(osv.osv):
         
         cant_facturas = 0
         
+        # 31/07/2015 (felix) Repasar facturas que fueron canceladas y borrarlas
+        src_invoice_cancel = obj_account_invoice.search(cr, uid, [('state','=','cancel')])
+        for inv_cancel in obj_account_invoice.browse(cr, uid, src_invoice_cancel, context):
+            src_comision_cancel = obj_comision_report_line.search(cr, uid, [('invoice_id','=',inv_cancel.id)])
+            if src_comision_cancel:
+                id_inv_cancel = obj_comision_report_line.browse(cr, uid, src_comision_cancel[0], context)['id']
+                obj_comision_report_line.unlink(cr, uid, [id_inv_cancel], context)
+        
         # Capturar datos de regla de penalizacion activa
         src_comision_rule = obj_comision_rule.search(cr, uid, [('active', '=', True)], order='id desc', limit=1)
         if src_comision_rule:
