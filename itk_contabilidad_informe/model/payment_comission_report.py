@@ -87,7 +87,10 @@ class payment_comission_main_itk(osv.osv):
         obj_users = self.pool.get('res.users')
         get_users = obj_users.search(cr, uid, [('id', '=', user_id)])
         login = obj_users.browse(cr, uid, get_users[0], context)['login']
-        res = str(login).upper()+'/'+str(fecha_factura[0])+'/'+str(fecha_factura[1]).rjust(2,'0')        
+        if int(fecha_factura[2]) < 16:
+            res = str(login).upper()+'/'+str(fecha_factura[0])+'/'+str(fecha_factura[1]).rjust(2,'0')+'_1'
+        else:
+            res = str(login).upper()+'/'+str(fecha_factura[0])+'/'+str(fecha_factura[1]).rjust(2,'0')+'_2'
         return res
                     
     # 25/05/2015 (felix) Metodo para mostrar listado de bonos
